@@ -1,0 +1,50 @@
+:root {
+  --theme-color: #5667f1;
+  --font-main-color: #27264d;
+  --font-sub-color: #8c8da9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--font-main-color);
+  background: linear-gradient(180deg, #fafafc 0%, #f1f1f8 50%, #f0f1f8 100%);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// 全局滚动条样式调整
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(39, 38, 77, 0.1);
+  border-radius: 4px;
+}
+
+code {
+  color: #abb2bf;
+}
