@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 import { Article } from "@/types/article";
+import { SignUp } from "@/types/user";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 type ArticleParams = AxiosRequestConfig & { params: Article }
@@ -8,6 +9,12 @@ type ArticleParams = AxiosRequestConfig & { params: Article }
 //   title: string,
 //   content: string
 // }
+
+
+export function signUp(params: SignUp) {
+  return request.post('http://localhost:8080/users/signUp', params)
+}
+
 
 
 export function getArticleList() {
