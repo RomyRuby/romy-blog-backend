@@ -10,6 +10,16 @@ type ArticleParams = AxiosRequestConfig & { params: Article }
 //   content: string
 // }
 
+type photo = {
+  fileName: string,
+  file: File
+}
+
+type Config = {
+  headers: any
+}
+
+
 
 export function signUp(params: SignUp) {
   return request.post('http://localhost:8080/users/signUp', params)
@@ -35,4 +45,9 @@ export function saveArticle(params: Article) {
 
 export function deleteArticle(id: string): Promise<{ success: Boolean }> {
   return request.delete('http://localhost:8080/article/' + id)
+}
+
+
+export function savePhoto(params: FormData, config: Config) {
+  return request.post('http://localhost:8080/photo', params, config)
 }

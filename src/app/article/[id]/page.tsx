@@ -1,14 +1,32 @@
+"use client";
 import { getArticle } from "@/api/data";
-import React from "react";
+import Markdown from "@/components/markdown";
+
+import React, { useEffect, useState } from "react";
 type params = {
   id: string;
 };
-const Article = async ({ params }: { params: params }) => {
-  const res = await getArticle(params.id);
+type Article = {
+  _id?: string;
+  content: string;
+  title: string;
+  created?: string;
+  updated?: string;
+};
+
+const Article = ({ params }: { params: params }) => {
+  const [article, setArticle] = useState<Article>({ title: "", content: "" });
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getArticle(params.id);
+      setArticle(res.data);
+    }
+    fetchData();
+  });
   return (
     <div>
-      <div>{res.data.title}</div>
-      <div>{res.data.content}</div>
+      <div>{article.title}</div>
+      <Markdown content={article.content} />
     </div>
   );
 };
