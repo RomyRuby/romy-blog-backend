@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
-import { Button, message, Upload } from "antd";
-import { savePhoto } from "@/api/data";
-import { headers } from "next/headers";
+import { Button, Upload } from "antd";
+import { savePhoto, getPhotos, deletePhoto } from "@/api/data";
+import { Image } from "antd";
+import { Photo } from "@/types/photo";
+import "./page.scss";
 
 const props: UploadProps = {
   name: "file",
@@ -12,16 +14,6 @@ const props: UploadProps = {
   headers: {
     authorization: "authorization-text",
   },
-  // onChange(info) {
-  //   if (info.file.status !== "uploading") {
-  //     console.log(info.file, info.fileList);
-  //   }
-  //   if (info.file.status === "done") {`
-  //     message.success(`${info.file.name} file uploaded successfully`);
-  //   } else if (info.file.status === "error") {
-  //     message.error(`${info.file.name} file upload failed.`);
-  //   }
-  // },
   beforeUpload: async (info) => {
     const params = new FormData();
     const config = {
@@ -35,10 +27,45 @@ const props: UploadProps = {
   },
 };
 
-const App: React.FC = () => (
-  <Upload {...props}>
-    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-  </Upload>
-);
+const PhotoItems: React.FC = () => {
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getPhotos();
+      setList(res.data.list);
+    }
+    fetchData();
+  }, []);
+
+  const handleClick = async (file: Photo) => {
+    const res = await deletePhoto(file._id);
+  };
+
+  const List = list.map((item: Photo) => {
+    return (
+      <div className="photo-item" key={item._id}>
+        <div>
+          <Image src={item.imageAddress} alt="" />
+        </div>
+        <div onClick={() => handleClick(item)}>删除</div>
+      </div>
+    );
+  });
+
+  return List;
+};
+
+const App: React.FC = () => {
+  return (
+    <>
+      <Upload {...props}>
+        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+      </Upload>
+      <div className="photo-list">
+        <PhotoItems />
+      </div>
+    </>
+  );
+};
 
 export default App;
