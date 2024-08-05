@@ -42,7 +42,7 @@ const Markdown = ({ content }: { content: string }) => {
           }
         },
       }}
-      className="prose prose-zinc max-w-2xl dark:prose-invert"
+      className="prose prose-zinc max-w-2xl "
     >
       {content}
     </ReactMarkdown>

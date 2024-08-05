@@ -19,6 +19,7 @@ const Articles = () => {
     const res = await getArticleList();
     setPosts(res.data.list);
   };
+  
   useEffect(() => {
     fetchData();
   }, []);
